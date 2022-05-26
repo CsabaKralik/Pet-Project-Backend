@@ -12,7 +12,7 @@ const app = express();
 app.use(
   session({
     resave: false,
-    secret: "asdghjrw",
+    secret: "asdwaad",
     saveUninitialized: false,
   })
 );
