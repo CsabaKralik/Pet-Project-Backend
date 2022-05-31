@@ -5,7 +5,7 @@ const Local = require("passport-local").Strategy;
 const Google = require("passport-google-oauth2").Strategy;
 const bcrypt = require("bcryptjs");
 
-const { findUserByEmail, createUser } = require("./db");
+const { findUserByEmail, createUser, newNote } = require("./db");
 
 const app = express();
 
@@ -73,18 +73,17 @@ app.get("/google/callback", passport.authenticate("google"), (req, res) => {
 passport.use(
   new Local(
     {
-      passwordField: "password",
       usernameField: "email",
+      passwordField: "password",
     },
     async (email, password, done) => {
       if (!email || !password) {
+        console.log("no cred");
         return done(null, false, { mesasge: "Please, fill in both fields. " });
       }
 
       const userInDb = await findUserByEmail(email);
-      if (userInDb.password !== password) {
-        return done(null, false, { mesasge: "Wrong credentials" });
-      }
+      console.log("found user");
 
       const result = await compare(password, userInDb.password);
 
@@ -118,7 +117,17 @@ app.post("/register", async (req, res, next) => {
 
 //login
 app.post("/login", passport.authenticate("local"), (req, res, next) => {
-  res.json(req.user);
+  return res.json(req.user);
 });
+
+//
+app.post("/newnote"),
+  async (req, res, next) => {
+    const user = req.body.email;
+    const note = req.body.note;
+
+    newNote(user, note);
+  };
+
 //export
 module.exports = app;

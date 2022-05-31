@@ -23,10 +23,15 @@ const createUser = async (user) => {
   db.data.users.push(user);
   return db.write();
 };
+const newNote = async (user, note) => {
+  await db.read();
+  db.data.users.findUserByEmail(user).push(note);
+};
 
 module.exports = {
   init,
   getAllUsers,
   findUserByEmail,
   createUser,
+  newNote,
 };
