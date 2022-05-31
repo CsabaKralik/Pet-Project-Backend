@@ -1,5 +1,3 @@
-let db = null;
-
 const init = async (fp) => {
   const lowdb = await import("lowdb");
   const adapter = new lowdb.JSONFile(fp);
@@ -8,6 +6,7 @@ const init = async (fp) => {
   db.data ||= { users: [] };
   return db.write();
 };
+init("lowdb");
 
 const getAllUsers = async () => {
   await db.read();
