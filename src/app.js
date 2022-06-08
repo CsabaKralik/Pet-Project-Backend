@@ -5,7 +5,14 @@ const Local = require("passport-local").Strategy;
 const Google = require("passport-google-oauth2").Strategy;
 const bcrypt = require("bcryptjs");
 
-const { findUserByEmail, createUser, newNote } = require("./db");
+const {
+  findUserByEmail,
+  createUser,
+  newNote,
+  findNote,
+  getAllUsers,
+} = require("./db");
+const res = require("express/lib/response");
 
 const app = express();
 
@@ -120,14 +127,30 @@ app.post("/login", passport.authenticate("local"), (req, res, next) => {
   return res.json(req.user);
 });
 
-//
-app.post("/newnote"),
-  async (req, res, next) => {
-    const user = req.body.email;
-    const note = req.body.note;
+//newnote
+app.post("/newnote", async (req, res, next) => {
+  const user = req.body.email;
+  const title = req.body.title;
+  const list = req.body.list;
+  console.log(user, title);
+  return await newNote(user, title, list);
+});
 
-    newNote(user, note);
-  };
+app.post("/getNote", async (req, res, next) => {
+  const user = await findUserByEmail(req.body.email);
+  const id = req.body.id;
+  return findNote(user, id);
+});
 
+app.post("/getUser", async (req, res, next) => {
+  const users = await getAllUsers();
+  console.log(users.length);
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].email == req.body.email) {
+      console.log(users[i].notes);
+      return res.json(users[i].notes);
+    }
+  }
+});
 //export
 module.exports = app;

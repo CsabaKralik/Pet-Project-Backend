@@ -2,7 +2,49 @@
   "users": [
     {
       "email": "test@gmail.com",
-      "password": "$2a$10$6I/QEyFAdGE6Kd0Ynlw4rOS6335LOrnv4ZPFX7yzEI62nTrvgTsu6"
+      "password": "$2a$10$6I/QEyFAdGE6Kd0Ynlw4rOS6335LOrnv4ZPFX7yzEI62nTrvgTsu6",
+      "notes": [
+        {
+          "id": 0,
+          "title": "Title",
+          "list": [
+            {
+              "text": "todo",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "title": "Title",
+          "list": [
+            {
+              "text": "todo",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Title",
+          "list": [
+            {
+              "text": "todo",
+              "done": false
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "title": "Title",
+          "list": [
+            {
+              "text": "todo",
+              "done": false
+            }
+          ]
+        }
+      ]
     },
     {
       "email": "test@test.com",
